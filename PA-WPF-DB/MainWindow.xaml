@@ -1,0 +1,19 @@
+﻿<Window x:Class="PA_WPF_DB.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PA_WPF_DB"
+        mc:Ignorable="d"
+        Title="Contacts" Height="450" Width="800">
+    <Grid>
+        <Label x:Name="lbl_name" Content="Name" HorizontalAlignment="Left" Margin="55,90,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl_phone" Content="Phone" HorizontalAlignment="Left" Margin="55,121,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txt_name" HorizontalAlignment="Left" Margin="121,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txt_phone" HorizontalAlignment="Left" Margin="121,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btn_insert" Content="Insert" HorizontalAlignment="Left" Height="25" Margin="55,175,0,0" VerticalAlignment="Top" Width="186" Click="btn_insert_Click"/>
+        <DataGrid x:Name="dgv_contacts" HorizontalAlignment="Left" Height="189" Margin="328,90,0,0" VerticalAlignment="Top" Width="409" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedCellsChanged="dgv_contacts_SelectedCellsChanged"/>
+        <Button x:Name="btn_query" Content="Full" HorizontalAlignment="Left" Height="25" Margin="328,295,0,0" VerticalAlignment="Top" Width="409" Click="btn_query_Click"/>
+
+    </Grid>
+</Window>
