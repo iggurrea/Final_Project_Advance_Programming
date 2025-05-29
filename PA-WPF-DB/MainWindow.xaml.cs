@@ -15,9 +15,6 @@ using System.Xml.Linq;
 
 namespace PA_WPF_DB
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -25,41 +22,42 @@ namespace PA_WPF_DB
             InitializeComponent();
         }
 
-        private void btn_insert_Click(object sender, RoutedEventArgs e)
+        /*
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
-            string name = txt_name.Text;
-            string phone = txt_phone.Text;
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Password.Trim();
 
-            string msg=ContactBLL.Insert(name, phone);
-            MessageBox.Show(msg);
-        }
-
-        private void btn_query_Click(object sender, RoutedEventArgs e)
-        {
-            DataTable? dt = ContactBLL.GetContacts();
-
-            // Bind to DataSet if available
-            if (dt != null)
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                dgv_contacts.ItemsSource = dt.DefaultView;
+                MessageBox.Show("Por favor, rellene todos los campos.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var userService = new UserService();
+            var user = userService.ValidateLogin(username, password);
+
+            if (user != null)
+            {
+                MessageBox.Show($"Bienvenido, {user.Username} ({user.Role})", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Aquí rediriges según el rol
+                if (user.Role == "Technician")
+                {
+                    var techWindow = new TechnicianDashboard(user);
+                    techWindow.Show();
+                }
+                else
+                {
+                    var userWindow = new UserDashboard(user);
+                    userWindow.Show();
+                }
+
+                this.Close();
             }
             else
             {
-                // Handle the case where ds is null (e.g., display a message)
-            }
-        }
-
-        private void dgv_contacts_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            DataGrid? grid = sender as DataGrid;
-            if (grid != null) {
-                var rowview = grid.SelectedItem as DataRowView;
-                if (rowview != null)
-                {
-                    DataRow row = rowview.Row;
-                    MessageBox.Show("Row: " + row.ItemArray[0].ToString());
-                }
-            }
-        }
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error de acceso", MessageBoxButton.OK, MessageBoxImage.Error);
+            }*/
     }
 }
