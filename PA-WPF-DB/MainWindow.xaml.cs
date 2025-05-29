@@ -42,7 +42,7 @@ namespace PA_WPF_DB
                 }
                 else //si es usuario normal
                 {
-                    new UserDashboard().Show();
+                    new UserDashboard(user.Username).Show();
                 }
                 this.Close();
             }

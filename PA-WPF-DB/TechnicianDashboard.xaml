@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PA_WPF_DB"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="TechnicianDashboard" Height="450" Width="800">
     <Grid>
         <TextBlock Text="Ventana del Técnico" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
