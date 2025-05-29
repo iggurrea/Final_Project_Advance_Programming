@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PA_WPF_DB"
         mc:Ignorable="d"
-         Title="Ticket2Help - Login" Height="340" Width="688">
+         Title="Ticket2Help - LogIn" Height="340" Width="688">
     <Grid Background="#f0f0f0" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

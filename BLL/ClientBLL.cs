@@ -12,10 +12,10 @@ namespace BLL
 {
     public class ClientBLL
     {
-        public static string Insert(string name, string type, DateTime dateTimee)
+        /*public static string Insert(string name, string type, DateTime dateTimee)
         {
             Client client = new Client(name, type, dateTimee);
-            if (ClientDAL.execINSERT(client))
+            if (UserManagement.execINSERT(client))
                 return $"Success: {client.ToString()}";
             else
                 return "Error";
@@ -23,8 +23,8 @@ namespace BLL
 
         public static DataTable? GetClients()
         {
-            DataTable? dt = ClientDAL.GetClients();
+            DataTable? dt = UserManagement.GetClients();
             return dt;
-        }
+        }*/
     }
 }
