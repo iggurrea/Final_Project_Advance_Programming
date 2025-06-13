@@ -10,9 +10,18 @@ using Models;
 
 namespace DAL
 {
+    /// <summary>
+    /// Class for the creation of tickets using the Factory pattern.
+    /// </summary>
     //crear tickets con Factory pattern
     public static class TicketFactory
     {
+        /// <summary>
+        /// Creates a ticket based on the type provided.
+        /// </summary>
+        /// <param name="type">Type it's a string that contains the type of the ticket to create.</param>
+        /// <returns>Return the ticket that creates</returns>
+        /// <exception cref="ArgumentException"></exception>
         public static Ticket CreateTicket(string type)
         {
             return type switch
@@ -23,6 +32,9 @@ namespace DAL
             };
         }
     }
+    /// <summary>
+    /// Class for managing tickets in the database.
+    /// </summary>
     public class TicketManagement
     {
         private readonly string connectionString =
@@ -80,7 +92,11 @@ namespace DAL
             return tickets;
         }
 
-
+        /// <summary>
+        /// Inserts a ticket into the database.
+        /// </summary>
+        /// <param name="ticket">It'a the (harware of software) ticket to insert.</param>
+        /// <returns>The number of the tickets inserted in the databse</returns>
         public bool InsertTicket(Ticket ticket)
         {
             string query = @"INSERT INTO Tickets 

@@ -11,11 +11,19 @@ using Models;
 
 namespace DAL
 {
+    /// <summary>
+    /// Class for managing user authentication and roles in the database.
+    /// </summary>
     public class UserManagement
     {
         private readonly string connectionString =
             ConfigurationManager.ConnectionStrings["Ticket2HelpConnection"].ConnectionString;
-
+        /// <summary>
+        /// Retrieves a user from the database based on username and password.
+        /// </summary>
+        /// <param name="username">Name of the user</param>
+        /// <param name="password">Password of the user</param>
+        /// <returns>Return the user that haves the username and the password and in the case that not have a user with the user and password returns null.</returns>
         public User? GetUser(string username, string password)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
