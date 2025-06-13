@@ -30,6 +30,10 @@ namespace PA_WPF_DB
         private readonly string _username;
         private readonly TicketManagement _ticketManager = new TicketManagement();
 
+        /// <summary>
+        /// Constructor for UserDashboard that initializes the window with the username of the logged-in user.
+        /// </summary>
+        /// <param name="username"></param>
         public UserDashboard(string username)
         {
             InitializeComponent();
@@ -37,20 +41,30 @@ namespace PA_WPF_DB
             LoadTickets();
         }
 
-        //cargar los tickets de cada usuario normal
+        /// <summary>
+        /// Loads the tickets for the current user into the DataGrid.
+        /// </summary>
         private void LoadTickets()
         {
             List<Ticket> tickets = _ticketManager.GetTicketsByUser(_username);
             dgTickets.ItemsSource = tickets;
         }
 
-        //funcionalidad botón update
+        /// <summary>
+        /// Handles the click event for the RefreshTickets button to reload the tickets.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefreshTickets_Click(object sender, RoutedEventArgs e)
         {
             LoadTickets();
         }
 
-        //Añadir nuevo ticket
+        /// <summary>
+        /// Handles the click event for the AddTicket button to open a new ticket window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddTicket_Click(object sender, RoutedEventArgs e)
         {
             var newTicketWindow = new NewTicketWindow(_username);
