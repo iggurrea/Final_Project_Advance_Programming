@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLL;
+using Models;
 
 namespace PA_WPF_DB
 {
@@ -19,9 +21,71 @@ namespace PA_WPF_DB
     /// </summary>
     public partial class TechnicianDashboard : Window
     {
+        private readonly TicketManagement _ticketManager = new TicketManagement();
+
+        /// <summary>
+        /// technician dashboard constructor that initializes the window and loads all tickets.
         public TechnicianDashboard()
         {
             InitializeComponent();
+            LoadAllTickets();
+        }
+
+        /// <summary>
+        /// function that loads all tickets into the DataGrid.
+        /// </summary>
+
+        private void LoadAllTickets()
+        {
+            List<Ticket> tickets = _ticketManager.GetAllTickets();
+            dgAllTickets.ItemsSource = tickets;
+        }
+
+        /// <summary>
+        /// Function that handles the click event for the Refresh button to reload all tickets.
+        /// </summary>
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            LoadAllTickets();
+        }
+
+        /// <summary>
+        /// Function that handles the click event for the Respond button to open a response window for the selected ticket.
+        /// </summary>
+        private void Respond_Click(object sender, RoutedEventArgs e)
+        {
+            Ticket selected = dgAllTickets.SelectedItem as Ticket;
+            if (selected == null)
+            {
+                MessageBox.Show("Select a ticket to respond.");
+                return;
+            }
+
+            var responseWindow = new TechnicianResponseWindow(selected.TicketId);
+            responseWindow.ShowDialog();
+            LoadAllTickets(); // actualizar lista
+        }
+
+        /// <summary>
+        /// Function that handles the click event for the Close button to close the selected ticket.
+        /// </summary>
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Ticket selected = dgAllTickets.SelectedItem as Ticket;
+            if (selected == null)
+            {
+                MessageBox.Show("Select a ticket to close.");
+                return;
+            }
+
+            bool result = _ticketManager.CloseTicket(selected.TicketId);
+            if (result)
+                MessageBox.Show("Ticket closed successfully.");
+            else
+                MessageBox.Show("Failed to close ticket.");
+
+            LoadAllTickets(); // actualizar lista de los tickets disponibles
         }
     }
 }
+

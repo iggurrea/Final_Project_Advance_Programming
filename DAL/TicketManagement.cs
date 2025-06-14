@@ -17,7 +17,7 @@ namespace DAL
     public static class TicketFactory
     {
         /// <summary>
-        /// Creates a ticket based on the type provided.
+        /// Creates a ticket based on the type provided using the Factory pattern.
         /// </summary>
         /// <param name="type">Type it's a string that contains the type of the ticket to create.</param>
         /// <returns>Return the ticket that creates</returns>
@@ -144,7 +144,65 @@ namespace DAL
         }
     }
 
+    #region TechnicianTicketManagementDAL
 
-    
+     /// <summary>  
+     /// Manages ticket operations for technicians in the database.
+     /// </summary>
+    public bool UpdateTicketResponse(int ticketId, string response){
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                string query = "UPDATE Tickets SET Response = @Response, Status = 'Answered' WHERE TicketId = @TicketId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Response", response);
+                cmd.Parameters.AddWithValue("@TicketId", ticketId);
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
 
-}
+        /// <summary>
+        /// Updates the status and service status of a ticket.
+        /// </summary>
+    public bool UpdateTicketStatus(int ticketId, string status, string serviceStatus)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                string query = "UPDATE Tickets SET Status = @Status, ServiceStatus = @ServiceStatus WHERE TicketId = @TicketId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Status", status);
+                cmd.Parameters.AddWithValue("@ServiceStatus", serviceStatus);
+                cmd.Parameters.AddWithValue("@TicketId", ticketId);
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets all tickets from the database.
+        /// </summary>
+        public List<Ticket> GetAllTickets()
+        {
+            var tickets = new List<Ticket>();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT * FROM Tickets";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var ticket = MapTicket(reader);
+                        tickets.Add(ticket);
+                    }
+                }
+            }
+            return tickets;
+        }
+
+
+        #endregion
+
+
+    }

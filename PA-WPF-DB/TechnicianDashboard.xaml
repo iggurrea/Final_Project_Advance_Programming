@@ -10,4 +10,32 @@
     <Grid>
         <TextBlock Text="Ventana del Técnico" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
     </Grid>
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Text="All Tickets" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+
+		<!-- Tabla de tickets -->
+		<DataGrid x:Name="dgAllTickets" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID" Binding="{Binding TicketId}" Width="Auto"/>
+				<DataGridTextColumn Header="User" Binding="{Binding Username}" Width="*"/>
+				<DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+				<DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+				<DataGridTextColumn Header="Service Status" Binding="{Binding ServiceStatus}" Width="*"/>
+				<DataGridTextColumn Header="Created" Binding="{Binding CreatedAt}" Width="*"/>
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<!-- Botones -->
+		<StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10,0,0">
+			<Button Content="Respond" Width="100" Margin="0,0,10,0" Click="Respond_Click"/>
+			<Button Content="Close Ticket" Width="100" Margin="0,0,10,0" Click="Close_Click"/>
+			<Button Content="Refresh" Width="100" Click="Refresh_Click"/>
+		</StackPanel>
+	</Grid>
 </Window>
