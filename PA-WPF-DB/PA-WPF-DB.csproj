@@ -10,16 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Page Remove="DashboardWindow.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="DashboardWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="C1.DataCollection.BindingList" Version="8.0.20233.180" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
