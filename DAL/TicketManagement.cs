@@ -174,10 +174,44 @@ namespace DAL;
             }
         }
 
-        /// <summary>
-        /// Gets all tickets from the database.
-        /// </summary>
-        public List<Ticket> GetAllTickets() {
+
+    /// <summary>
+    /// Maps the data from a SqlDataReader row to a Ticket object.
+    /// Uses the TicketFactory to create the appropriate subclass (Hardware or Software).
+    /// </summary>
+    /// <param name="reader">The SqlDataReader containing ticket data from the database.</param>
+    /// <returns>A Ticket object (either HardwareTicket or SoftwareTicket) populated with data.</returns>
+    private Ticket MapTicket(SqlDataReader reader)
+    {
+        string type = reader["TicketType"].ToString();
+        Ticket ticket = TicketFactory.CreateTicket(type);
+
+        ticket.Id = Convert.ToInt32(reader["Id"]);
+        ticket.Username = reader["Username"].ToString();
+        ticket.TicketType = type;
+        ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
+        ticket.Status = reader["Status"].ToString();
+        ticket.ServiceStatus = reader["ServiceStatus"]?.ToString();
+
+        if (ticket is HardwareTicket hw)
+        {
+            hw.Equipment = reader["Equipment"]?.ToString();
+            hw.Malfunction = reader["Malfunction"]?.ToString();
+        }
+        else if (ticket is SoftwareTicket sw)
+        {
+            sw.Software = reader["Software"]?.ToString();
+            sw.Description = reader["Description"]?.ToString();
+        }
+
+        return ticket;
+    }
+
+
+    /// <summary>
+    /// Gets all tickets from the database.
+    /// </summary>
+    public List<Ticket> GetAllTickets() {
             var tickets = new List<Ticket>();
             using (var conn = new SqlConnection(connectionString))
             {
