@@ -1,5 +1,6 @@
 using BLL;
 using System.Windows;
+using DAL;
 
 namespace PA_WPF_DB
 {
@@ -9,7 +10,7 @@ namespace PA_WPF_DB
     public partial class TechnicianResponseWindow : Window
     {
         private readonly int _ticketId;
-        private readonly TicketManagement _ticketManager = new TicketManagement();
+        private readonly TicketManagementBLL _ticketManagerBLL = new TicketManagementBLL();
 
         /// <summary>
         /// Constructor for TechnicianResponseWindow that initializes the window with the ticket ID to respond to.
@@ -36,7 +37,7 @@ namespace PA_WPF_DB
                 return;
             }
 
-            bool result = _ticketManager.RespondToTicket(_ticketId, response);
+            bool result = _ticketManagerBLL.RespondToTicket(_ticketId, response);
             if (result)
             {
                 MessageBox.Show("Response submitted.");

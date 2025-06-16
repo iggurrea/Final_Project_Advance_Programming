@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLL;
 using Models;
+using DAL;
 
 namespace PA_WPF_DB
 {
@@ -21,7 +22,7 @@ namespace PA_WPF_DB
     /// </summary>
     public partial class TechnicianDashboard : Window
     {
-        private readonly TicketManagement _ticketManager = new TicketManagement();
+        private readonly TicketManagementBLL _ticketManager = new TicketManagementBLL();
 
         /// <summary>
         /// technician dashboard constructor that initializes the window and loads all tickets.
@@ -61,7 +62,7 @@ namespace PA_WPF_DB
                 return;
             }
 
-            var responseWindow = new TechnicianResponseWindow(selected.TicketId);
+            var responseWindow = new TechnicianResponseWindow(selected.Id);
             responseWindow.ShowDialog();
             LoadAllTickets(); // actualizar lista
         }
@@ -78,7 +79,7 @@ namespace PA_WPF_DB
                 return;
             }
 
-            bool result = _ticketManager.CloseTicket(selected.TicketId);
+            bool result = _ticketManager.CloseTicket(selected.Id);
             if (result)
                 MessageBox.Show("Ticket closed successfully.");
             else

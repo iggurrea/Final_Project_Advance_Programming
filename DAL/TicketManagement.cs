@@ -8,13 +8,12 @@ using System.Configuration;
 using System.Data.SqlClient;
 using Models;
 
-namespace DAL{
+namespace DAL;
     /// <summary>
     /// Class for the creation of tickets using the Factory pattern.
     /// </summary>
     //crear tickets con Factory pattern
-    public static class TicketFactory
-    {
+    public static class TicketFactory{
         /// <summary>
         /// Creates a ticket based on the type provided using the Factory pattern.
         /// </summary>
@@ -31,10 +30,11 @@ namespace DAL{
             };
         }
     }
+
     /// <summary>
     /// Class for managing tickets in the database.
     /// </summary>
-    public class TicketManagement{
+    public class TicketManagement {
         private readonly string connectionString =
             ConfigurationManager.ConnectionStrings["Ticket2HelpConnection"].ConnectionString;
 
@@ -140,14 +140,13 @@ namespace DAL{
                 return result > 0;
             }
         }
-    }
 
-    #region TechnicianTicketManagementDAL
+        #region TechnicianTicketManagementDAL
 
-     /// <summary>  
-     /// Manages ticket operations for technicians in the database.
-     /// </summary>
-    public bool UpdateTicketResponse(int ticketId, string response){
+        /// <summary>  
+        /// Manages ticket operations for technicians in the database.
+        /// </summary>
+        public bool UpdateTicketResponse(int ticketId, string response) {
             using (var conn = new SqlConnection(connectionString))
             {
                 string query = "UPDATE Tickets SET Response = @Response, Status = 'Answered' WHERE TicketId = @TicketId";
@@ -162,7 +161,7 @@ namespace DAL{
         /// <summary>
         /// Updates the status and service status of a ticket.
         /// </summary>
-    public bool UpdateTicketStatus(int ticketId, string status, string serviceStatus){
+        public bool UpdateTicketStatus(int ticketId, string status, string serviceStatus) {
             using (var conn = new SqlConnection(connectionString))
             {
                 string query = "UPDATE Tickets SET Status = @Status, ServiceStatus = @ServiceStatus WHERE TicketId = @TicketId";
@@ -178,7 +177,7 @@ namespace DAL{
         /// <summary>
         /// Gets all tickets from the database.
         /// </summary>
-        public List<Ticket> GetAllTickets(){
+        public List<Ticket> GetAllTickets() {
             var tickets = new List<Ticket>();
             using (var conn = new SqlConnection(connectionString))
             {
@@ -197,5 +196,7 @@ namespace DAL{
             return tickets;
         }
         #endregion
+    }
+    
 
 
