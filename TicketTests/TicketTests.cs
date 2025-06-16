@@ -132,6 +132,7 @@ namespace Tests
         [ExpectedException(typeof(ArgumentException))]
         public void Ticket_InvalidServiceStatus_ThrowsException()
         {
+            
             var ticket = new HardwareTicket { ServiceStatus = "Maybe" }; // Invalid status
 
             if (ticket.ServiceStatus != "Open" && ticket.ServiceStatus != "Resolved" && ticket.ServiceStatus != "Not Resolved")
