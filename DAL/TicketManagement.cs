@@ -41,7 +41,11 @@ namespace DAL;
         public List<Ticket> GetTicketsByUser(string username)
         {
             var tickets = new List<Ticket>();
-            string query = "SELECT * FROM Tickets WHERE Username = @username";
+            string query = @"
+            SELECT * 
+            FROM Tickets 
+            WHERE Username = @username";
+
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -59,12 +63,14 @@ namespace DAL;
                         Ticket ticket = TicketFactory.CreateTicket(type);
 
                         // Propiedades comunes
-                        ticket.Id = Convert.ToInt32(reader["Id"]);
+                        ticket.Id = Convert.ToInt32(reader["TicketId"]);
                         ticket.Username = reader["Username"].ToString();
                         ticket.TicketType = type;
                         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
                         ticket.Status = reader["Status"].ToString();
                         ticket.ServiceStatus = reader["ServiceStatus"].ToString();
+                        ticket.Description = reader["Description"].ToString();
+                        ticket.Response = reader["Response"].ToString();
 
                         // Propiedades específicas
                         if (ticket is HardwareTicket hw)
@@ -184,7 +190,7 @@ namespace DAL;
     /// <returns>A Ticket object (either HardwareTicket or SoftwareTicket) populated with data.</returns>
     private Ticket MapTicket(SqlDataReader reader)
     {
-        string type = reader["TicketType"].ToString();
+        string type = reader["TicketType"].ToString() ?? "";
         Ticket ticket = TicketFactory.CreateTicket(type);
 
         ticket.Id = reader["TicketId"] != DBNull.Value ? Convert.ToInt32(reader["TicketId"]) : 0;
@@ -211,27 +217,26 @@ namespace DAL;
     /// <summary>
     /// Gets all tickets from the database.
     /// </summary>
-    public List<Ticket> GetAllTickets()
-    {
-        var tickets = new List<Ticket>();
-        using (var conn = new SqlConnection(connectionString))
-        {
-            string query = "SELECT * FROM Tickets";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            conn.Open();
-            using (var reader = cmd.ExecuteReader())
+    public List<Ticket> GetAllTickets() {
+            var tickets = new List<Ticket>();
+            using (var conn = new SqlConnection(connectionString))
             {
-                while (reader.Read())
+                string query = "SELECT * FROM Tickets";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
                 {
-                    var ticket = MapTicket(reader);
-                    tickets.Add(ticket);
+                    while (reader.Read())
+                    {
+                        var ticket = MapTicket(reader);
+                        tickets.Add(ticket);
+                    }
                 }
             }
+            return tickets;
         }
-        return tickets;
+        #endregion
     }
-    #endregion
-}
     
 
 
