@@ -187,51 +187,51 @@ namespace DAL;
         string type = reader["TicketType"].ToString();
         Ticket ticket = TicketFactory.CreateTicket(type);
 
-        ticket.Id = Convert.ToInt32(reader["TicketId"]);
-        ticket.Username = reader["Username"].ToString();
+        ticket.Id = reader["TicketId"] != DBNull.Value ? Convert.ToInt32(reader["TicketId"]) : 0;
+        ticket.Username = reader["Username"]?.ToString() ?? "";
         ticket.TicketType = type;
-        ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
-        ticket.Status = reader["Status"].ToString();
-        ticket.ServiceStatus = reader["ServiceStatus"]?.ToString();
+        ticket.CreatedAt = reader["CreatedAt"] != DBNull.Value ? Convert.ToDateTime(reader["CreatedAt"]) : DateTime.MinValue;
+        ticket.Status = reader["Status"]?.ToString() ?? "";
+        ticket.ServiceStatus = reader["ServiceStatus"]?.ToString() ?? "";
 
         if (ticket is HardwareTicket hw)
         {
-            hw.Equipment = reader["Equipment"]?.ToString();
-            hw.Malfunction = reader["Malfunction"]?.ToString();
+            hw.Equipment = reader["Equipment"]?.ToString() ?? "";
+            hw.Malfunction = reader["Malfunction"]?.ToString() ?? "";
         }
         else if (ticket is SoftwareTicket sw)
         {
-            sw.Software = reader["Software"]?.ToString();
-            sw.Description = reader["Description"]?.ToString();
+            sw.Software = reader["Software"]?.ToString() ?? "";
+            sw.Description = reader["Description"]?.ToString() ?? "";
         }
 
         return ticket;
     }
 
-
     /// <summary>
     /// Gets all tickets from the database.
     /// </summary>
-    public List<Ticket> GetAllTickets() {
-            var tickets = new List<Ticket>();
-            using (var conn = new SqlConnection(connectionString))
+    public List<Ticket> GetAllTickets()
+    {
+        var tickets = new List<Ticket>();
+        using (var conn = new SqlConnection(connectionString))
+        {
+            string query = "SELECT * FROM Tickets";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            conn.Open();
+            using (var reader = cmd.ExecuteReader())
             {
-                string query = "SELECT * FROM Tickets";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                conn.Open();
-                using (var reader = cmd.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        var ticket = MapTicket(reader);
-                        tickets.Add(ticket);
-                    }
+                    var ticket = MapTicket(reader);
+                    tickets.Add(ticket);
                 }
             }
-            return tickets;
         }
-        #endregion
+        return tickets;
     }
+    #endregion
+}
     
 
 
