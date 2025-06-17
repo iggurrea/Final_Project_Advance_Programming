@@ -16,10 +16,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Title-->
+        <!-- Title -->
         <TextBlock Text="All Tickets" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" Grid.Row="0"/>
 
-        <!-- Ticket table -->
+        <!-- Ticket Table -->
         <DataGrid x:Name="dgAllTickets" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding TicketId}" Width="Auto"/>
@@ -31,11 +31,12 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Boton -->
+        <!-- Buttons -->
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10,0,0">
             <Button Content="Respond" Width="100" Margin="0,0,10,0" Click="Respond_Click"/>
             <Button Content="Close Ticket" Width="100" Margin="0,0,10,0" Click="Close_Click"/>
-            <Button Content="Refresh" Width="100" Click="Refresh_Click"/>
+            <Button Content="Refresh" Width="100" Margin="0,0,10,0" Click="Refresh_Click"/>
+            <Button Content="View Stats" Width="100" Click="ViewStats_Click"/>
         </StackPanel>
     </Grid>
 </Window>

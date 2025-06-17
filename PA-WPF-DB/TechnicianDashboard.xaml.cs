@@ -18,23 +18,17 @@ using DAL;
 namespace PA_WPF_DB
 {
     /// <summary>
-    /// Lógica de interacción para TechnicianDashboard.xaml
+    /// Interaction logic for TechnicianDashboard.xaml
     /// </summary>
     public partial class TechnicianDashboard : Window
     {
         private readonly TicketManagementBLL _ticketManager = new TicketManagementBLL();
 
-        /// <summary>
-        /// technician dashboard constructor that initializes the window and loads all tickets.
         public TechnicianDashboard()
         {
             InitializeComponent();
             LoadAllTickets();
         }
-
-        /// <summary>
-        /// function that loads all tickets into the DataGrid.
-        /// </summary>
 
         private void LoadAllTickets()
         {
@@ -42,17 +36,11 @@ namespace PA_WPF_DB
             dgAllTickets.ItemsSource = tickets;
         }
 
-        /// <summary>
-        /// Function that handles the click event for the Refresh button to reload all tickets.
-        /// </summary>
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             LoadAllTickets();
         }
 
-        /// <summary>
-        /// Function that handles the click event for the Respond button to open a response window for the selected ticket.
-        /// </summary>
         private void Respond_Click(object sender, RoutedEventArgs e)
         {
             Ticket selected = dgAllTickets.SelectedItem as Ticket;
@@ -64,12 +52,9 @@ namespace PA_WPF_DB
 
             var responseWindow = new TechnicianResponseWindow(selected.Id);
             responseWindow.ShowDialog();
-            LoadAllTickets(); // actualizar lista
+            LoadAllTickets();
         }
 
-        /// <summary>
-        /// Function that handles the click event for the Close button to close the selected ticket.
-        /// </summary>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Ticket selected = dgAllTickets.SelectedItem as Ticket;
@@ -80,12 +65,18 @@ namespace PA_WPF_DB
             }
 
             bool result = _ticketManager.CloseTicket(selected.Id);
-            if (result)
-                MessageBox.Show("Ticket closed successfully.");
-            else
-                MessageBox.Show("Failed to close ticket.");
+            MessageBox.Show(result ? "Ticket closed successfully." : "Failed to close ticket.");
 
-            LoadAllTickets(); // actualizar lista de los tickets disponibles
+            LoadAllTickets();
+        }
+
+        /// <summary>
+        /// Opens the dashboard statistics window.
+        /// </summary>
+        private void ViewStats_Click(object sender, RoutedEventArgs e)
+        {
+            var statsWindow = new DashboardWindow();
+            statsWindow.ShowDialog();
         }
     }
 }
