@@ -152,17 +152,25 @@ namespace DAL;
         /// Manages ticket operations for technicians in the database.
         /// </summary>
         public bool UpdateTicketResponse(int ticketId, string response) {
-            using (var conn = new SqlConnection(connectionString))
-            {
-                string query = "UPDATE Tickets SET Response = @Response, Status = 'Fulfilled', AnsweredAt = @AnsweredAt WHERE TicketId = @TicketId";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Response", response);
-                cmd.Parameters.AddWithValue("@TicketId", ticketId);
-                cmd.Parameters.AddWithValue("@AnsweredAt", DateTime.Now);
+        using (var conn = new SqlConnection(connectionString))
+        {
+            string query = @"
+            UPDATE Tickets 
+            SET Response = @Response, 
+                Status = 'Fulfilled', 
+                AnsweredAt = @AnsweredAt, 
+                ServiceStatus = 'Resolved'
+            WHERE TicketId = @TicketId";
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Response", response);
+            cmd.Parameters.AddWithValue("@AnsweredAt", DateTime.Now);
+            cmd.Parameters.AddWithValue("@TicketId", ticketId);
+
             conn.Open();
-                return cmd.ExecuteNonQuery() > 0;
-            }
+            return cmd.ExecuteNonQuery() > 0;
         }
+    }
 
         /// <summary>
         /// Updates the status and service status of a ticket.
@@ -198,6 +206,7 @@ namespace DAL;
         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
         ticket.Status = reader["Status"]?.ToString() ?? "";
         ticket.ServiceStatus = reader["ServiceStatus"]?.ToString() ?? "";
+        ticket.Response = reader["Response"]?.ToString() ?? "";
 
         if (ticket is HardwareTicket hw)
         {
