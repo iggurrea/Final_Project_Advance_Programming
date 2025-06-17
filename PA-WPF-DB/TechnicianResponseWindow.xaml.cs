@@ -38,9 +38,11 @@ namespace PA_WPF_DB
             }
 
             bool result = _ticketManagerBLL.RespondToTicket(_ticketId, response);
+            
             if (result)
             {
                 MessageBox.Show("Response submitted.");
+                this._ticketManagerBLL.CloseTicket(_ticketId);
                 this.Close();
             }
             else

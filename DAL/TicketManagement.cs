@@ -189,7 +189,6 @@ namespace DAL;
 
         ticket.Id = Convert.ToInt32(reader["TicketId"]);
         ticket.Username = reader["Username"].ToString();
-        ticket.TicketType = type;
         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
         ticket.Status = reader["Status"].ToString();
         ticket.ServiceStatus = reader["ServiceStatus"]?.ToString();

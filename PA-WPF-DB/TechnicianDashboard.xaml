@@ -24,7 +24,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding TicketId}" Width="Auto"/>
                 <DataGridTextColumn Header="User" Binding="{Binding Username}" Width="*"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding TicketType}" Width="*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
                 <DataGridTextColumn Header="Service Status" Binding="{Binding ServiceStatus}" Width="*"/>
                 <DataGridTextColumn Header="Created" Binding="{Binding CreatedAt}" Width="*"/>

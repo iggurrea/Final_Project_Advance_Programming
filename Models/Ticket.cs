@@ -48,6 +48,7 @@ namespace Models
     /// </summary>
     public class HardwareTicket : Ticket
     {
+
         /// <summary>
         /// Gets or sets the equipment involved in the hardware ticket and the malfunction description.
         /// </summary>
