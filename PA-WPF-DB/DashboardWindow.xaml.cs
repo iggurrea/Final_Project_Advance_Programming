@@ -90,6 +90,14 @@ namespace PA_WPF_DB
         {
             LoadDashboardData();
         }
+
+        /// <summary>
+        /// Handles the back button click to return to the technician dashboard.
+        /// </summary>
+        private void BackToTickets_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(); // Simply closes the dashboard window
+        }
     }
 }
 
