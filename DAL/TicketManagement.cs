@@ -206,6 +206,8 @@ namespace DAL;
         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
         ticket.Status = reader["Status"]?.ToString() ?? "";
         ticket.ServiceStatus = reader["ServiceStatus"]?.ToString() ?? "";
+        ticket.Response = reader["Response"].ToString();
+
 
         if (ticket is HardwareTicket hw)
         {

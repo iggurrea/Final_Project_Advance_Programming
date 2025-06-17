@@ -74,7 +74,7 @@ namespace PA_WPF_DB
                 }
 
                 hwTicket.Equipment = equipment;
-                ticket.Description = malfunction;
+                hwTicket.Malfunction = malfunction;
             }
             else if (ticket is SoftwareTicket swTicket)
             {
@@ -88,7 +88,7 @@ namespace PA_WPF_DB
                 }
 
                 swTicket.Software = software;
-                ticket.Description = description;
+                swTicket.Description = description;
             }
 
             // Guardar en la base de datos
