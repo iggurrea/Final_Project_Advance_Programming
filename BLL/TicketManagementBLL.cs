@@ -30,7 +30,7 @@ public class TicketManagementBLL
     /// <returns>Returns true if ticket can stay close and false in the other case</returns>
     public bool CloseTicket(int ticketId)
     {
-        return _ticketManag.UpdateTicketStatus(ticketId, "Answered", "Closed");
+        return _ticketManag.UpdateTicketStatus(ticketId, "Fulfilled", "Resolved");
     }
 
     /// <summary>
