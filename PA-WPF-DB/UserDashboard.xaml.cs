@@ -50,6 +50,7 @@ namespace PA_WPF_DB
             dgTickets.ItemsSource = tickets;
         }
 
+
         /// <summary>
         /// Handles the click event for the RefreshTickets button to reload the tickets.
         /// </summary>

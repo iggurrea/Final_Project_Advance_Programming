@@ -41,7 +41,11 @@ namespace DAL;
         public List<Ticket> GetTicketsByUser(string username)
         {
             var tickets = new List<Ticket>();
-            string query = "SELECT * FROM Tickets WHERE Username = @username";
+            string query = @"
+            SELECT * 
+            FROM Tickets 
+            WHERE Username = @username";
+
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -59,12 +63,13 @@ namespace DAL;
                         Ticket ticket = TicketFactory.CreateTicket(type);
 
                         // Propiedades comunes
-                        ticket.Id = Convert.ToInt32(reader["Id"]);
+                        ticket.Id = Convert.ToInt32(reader["TicketId"]);
                         ticket.Username = reader["Username"].ToString();
                         ticket.TicketType = type;
                         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
                         ticket.Status = reader["Status"].ToString();
                         ticket.ServiceStatus = reader["ServiceStatus"].ToString();
+                        ticket.Response = reader["Response"].ToString();
 
                         // Propiedades específicas
                         if (ticket is HardwareTicket hw)
@@ -190,23 +195,22 @@ namespace DAL;
         ticket.Id = Convert.ToInt32(reader["TicketId"]);
         ticket.Username = reader["Username"].ToString();
         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
-        ticket.Status = reader["Status"].ToString();
-        ticket.ServiceStatus = reader["ServiceStatus"]?.ToString();
+        ticket.Status = reader["Status"]?.ToString() ?? "";
+        ticket.ServiceStatus = reader["ServiceStatus"]?.ToString() ?? "";
 
         if (ticket is HardwareTicket hw)
         {
-            hw.Equipment = reader["Equipment"]?.ToString();
-            hw.Malfunction = reader["Malfunction"]?.ToString();
+            hw.Equipment = reader["Equipment"]?.ToString() ?? "";
+            hw.Malfunction = reader["Malfunction"]?.ToString() ?? "";
         }
         else if (ticket is SoftwareTicket sw)
         {
-            sw.Software = reader["Software"]?.ToString();
-            sw.Description = reader["Description"]?.ToString();
+            sw.Software = reader["Software"]?.ToString() ?? "";
+            sw.Description = reader["Description"]?.ToString() ?? "";
         }
 
         return ticket;
     }
-
 
     /// <summary>
     /// Gets all tickets from the database.

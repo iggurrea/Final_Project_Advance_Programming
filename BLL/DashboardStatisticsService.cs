@@ -4,9 +4,6 @@ using System.Data.SqlClient;
 
 namespace BLL
 {
-    /// <summary>
-    /// Provides statistical data about tickets for the dashboard.
-    /// </summary>
     public class DashboardStatisticsService
     {
         private readonly string connectionString;
@@ -21,8 +18,6 @@ namespace BLL
         /// </summary>
         public double GetPercentageFulfilledWithinDateRange(DateTime start, DateTime end)
         {
-
-            // Check the dates to be valid in SQL Server
             DateTime sqlMinDate = new DateTime(1753, 1, 1);
             if (start < sqlMinDate) start = sqlMinDate;
             if (end < sqlMinDate) end = sqlMinDate;
@@ -44,19 +39,18 @@ namespace BLL
             {
                 int total = reader["Total"] != DBNull.Value ? Convert.ToInt32(reader["Total"]) : 0;
                 int fulfilled = reader["Fulfilled"] != DBNull.Value ? Convert.ToInt32(reader["Fulfilled"]) : 0;
+
                 return total > 0 ? (double)fulfilled / total * 100 : 0;
             }
             return 0;
         }
 
         /// <summary>
-        /// Returns the number of tickets grouped by service status (open, resolved, etc.).
+        /// Returns the number of tickets grouped by service status.
         /// Optionally filters by date.
         /// </summary>
         public Dictionary<string, int> GetServiceStatusDistribution(DateTime? start = null, DateTime? end = null)
         {
-
-            // Check the dates to be valid in SQL Server
             DateTime sqlMinDate = new DateTime(1753, 1, 1);
             if (start < sqlMinDate) start = sqlMinDate;
             if (end < sqlMinDate) end = sqlMinDate;
@@ -97,7 +91,6 @@ namespace BLL
         /// </summary>
         public Dictionary<string, double> GetAverageServiceTimePerType(DateTime? start = null, DateTime? end = null)
         {
-            // Check the dates to be valid in SQL Server
             DateTime sqlMinDate = new DateTime(1753, 1, 1);
             if (start < sqlMinDate) start = sqlMinDate;
             if (end < sqlMinDate) end = sqlMinDate;

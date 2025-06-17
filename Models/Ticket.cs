@@ -32,6 +32,11 @@ namespace Models
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
+        /// Gets or sets the date and time when the ticket was answered.
+        /// </summary>
+        public DateTime AnsweredAt { get; set; }
+
+        /// <summary>
         /// Gets or sets the status of the ticket, which can be 'Unanswered', 'In Service', or 'Fulfilled'.
         /// </summary>
         public string Status { get; set; } // 'Unanswered', 'In Service', 'Fulfilled'
@@ -40,7 +45,13 @@ namespace Models
         /// Gets or sets the service status of the ticket, which can be 'Open', 'Resolved', or 'Not Resolved'.
         /// </summary>
         public string ServiceStatus { get; set; } // 'Open', 'Resolved', 'Not Resolved'
-        
+
+
+        /// <summary>
+        /// Response for the ticket
+        /// </summary>
+        public string Response { get; set; }
+
         public abstract string GetSummary(); 
     }
     /// <summary>

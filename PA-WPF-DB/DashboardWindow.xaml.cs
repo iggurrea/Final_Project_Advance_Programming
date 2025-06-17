@@ -38,50 +38,46 @@ namespace PA_WPF_DB
         private void LoadDashboardData()
         {
             // Convert nullable DatePickers to non-nullable with default values
-            DateTime start = StartDatePicker.SelectedDate ?? DateTime.MinValue;
-            DateTime end = EndDatePicker.SelectedDate ?? DateTime.MaxValue;
+            DateTime? startDate = StartDatePicker.SelectedDate;
+            DateTime? endDate = EndDatePicker.SelectedDate;
 
-            // Get fulfilled ticket percentage
-            double fulfilled = statisticsService.GetPercentageFulfilledWithinDateRange(start, end);
-            FulfilledPercentageText = $"Fulfilled Tickets: {fulfilled:0.##}%";
+            // Evita errores con fechas nulas
+            if (!startDate.HasValue || !endDate.HasValue)
+            {
+                startDate = new DateTime(2000, 1, 1); // fecha por defecto
+                endDate = DateTime.Now;
+            }
 
-            // Get status distribution
-            var statusData = statisticsService.GetServiceStatusDistribution(start, end);
+            // 📊 Pie Chart - Distribución de estados del servicio
+            var statusData = statisticsService.GetServiceStatusDistribution(startDate, endDate);
             ServiceStatusSeries = new SeriesCollection();
-
-            // Add series based on available keys
-            if (statusData.ContainsKey("Solved"))
+            foreach (var kvp in statusData)
             {
                 ServiceStatusSeries.Add(new PieSeries
                 {
-                    Title = "Solved",
-                    Values = new ChartValues<int> { statusData["Solved"] },
-                    DataLabels = true
-                });
-            }
-            if (statusData.ContainsKey("Unsolved"))
-            {
-                ServiceStatusSeries.Add(new PieSeries
-                {
-                    Title = "Unsolved",
-                    Values = new ChartValues<int> { statusData["Unsolved"] },
+                    Title = kvp.Key,
+                    Values = new ChartValues<int> { kvp.Value },
                     DataLabels = true
                 });
             }
 
-            // Get average service time
-            var avgTimes = statisticsService.GetAverageServiceTimePerType(start, end);
+            // 📉 Column Chart - Tiempo medio de servicio por tipo
+            var avgTimes = statisticsService.GetAverageServiceTimePerType(startDate, endDate);
             AverageTimeSeries = new SeriesCollection
-            {
-                new ColumnSeries
-                {
-                    Title = "Avg. Time",
-                    Values = new ChartValues<double>(avgTimes.Values)
-                }
-            };
+    {
+        new ColumnSeries
+        {
+            Title = "Average Time",
+            Values = new ChartValues<double>(avgTimes.Values)
+        }
+    };
             TimeLabels = avgTimes.Keys.ToArray();
 
-            // Refresh data bindings
+            // ✅ Porcentaje de tickets cumplidos
+            double fulfilled = statisticsService.GetPercentageFulfilledWithinDateRange(startDate.Value, endDate.Value);
+            FulfilledPercentageText = $"Fulfilled Tickets: {fulfilled:0.##}%";
+
+            // 🔄 Refresca los gráficos en el XAML
             DataContext = null;
             DataContext = this;
         }
