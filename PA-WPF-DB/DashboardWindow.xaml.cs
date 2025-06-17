@@ -6,27 +6,14 @@ using LiveCharts.Wpf;
 using BLL;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PA_WPF_DB
 {
     /// <summary>
-    /// Lógica de interacción para DashboardWindow.xaml
+    /// Interaction logic for DashboardWindow.xaml
     /// </summary>
-    /// 
-
-
     public partial class DashboardWindow : Window
     {
-
         private DashboardStatisticsService statisticsService;
 
         // Properties bound to the charts
@@ -39,40 +26,62 @@ namespace PA_WPF_DB
         {
             InitializeComponent();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["Ticket2HelpConnection"].ConnectionString;
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["Ticket2HelpConnection"].ConnectionString;
+
             statisticsService = new DashboardStatisticsService(connectionString);
 
             LoadDashboardData();
-
             DataContext = this; // Bind data to XAML
         }
 
         private void LoadDashboardData()
         {
-            DateTime? startDate = StartDatePicker.SelectedDate;
-            DateTime? endDate = EndDatePicker.SelectedDate;
+            // Convert nullable DatePickers to non-nullable with default values
+            DateTime start = StartDatePicker.SelectedDate ?? DateTime.MinValue;
+            DateTime end = EndDatePicker.SelectedDate ?? DateTime.MaxValue;
 
-            // Load percentage of solved/unsolved
-            var statusData = statisticsService.GetServiceStatusDistribution();
-            ServiceStatusSeries = new SeriesCollection
+            // Get fulfilled ticket percentage
+            double fulfilled = statisticsService.GetPercentageFulfilledWithinDateRange(start, end);
+            FulfilledPercentageText = $"Fulfilled Tickets: {fulfilled:0.##}%";
+
+            // Get status distribution
+            var statusData = statisticsService.GetServiceStatusDistribution(start, end);
+            ServiceStatusSeries = new SeriesCollection();
+
+            // Add series based on available keys
+            if (statusData.ContainsKey("Solved"))
             {
-                new PieSeries { Title = "Solved",  Values = new ChartValues<int> { statusData.Solved }, DataLabels = true },
-                new PieSeries { Title = "Unsolved", Values = new ChartValues<int> { statusData.Unsolved }, DataLabels = true }
-            };
+                ServiceStatusSeries.Add(new PieSeries
+                {
+                    Title = "Solved",
+                    Values = new ChartValues<int> { statusData["Solved"] },
+                    DataLabels = true
+                });
+            }
+            if (statusData.ContainsKey("Unsolved"))
+            {
+                ServiceStatusSeries.Add(new PieSeries
+                {
+                    Title = "Unsolved",
+                    Values = new ChartValues<int> { statusData["Unsolved"] },
+                    DataLabels = true
+                });
+            }
 
-            // Load average time per type
-            var avgTimes = statisticsService.GetAverageServiceTimePerType(startDate, endDate);
+            // Get average service time
+            var avgTimes = statisticsService.GetAverageServiceTimePerType(start, end);
             AverageTimeSeries = new SeriesCollection
             {
-                new ColumnSeries { Title = "Avg. Time", Values = new ChartValues<double>(avgTimes.Values) }
+                new ColumnSeries
+                {
+                    Title = "Avg. Time",
+                    Values = new ChartValues<double>(avgTimes.Values)
+                }
             };
             TimeLabels = avgTimes.Keys.ToArray();
 
-            // Fulfilled tickets %
-            double fulfilled = statisticsService.GetPercentageFulfilledWithinDateRange(startDate, endDate);
-            FulfilledPercentageText = $"Fulfilled Tickets: {fulfilled:0.##}%";
-
-            // Refresh bindings
+            // Refresh data bindings
             DataContext = null;
             DataContext = this;
         }
@@ -83,3 +92,4 @@ namespace PA_WPF_DB
         }
     }
 }
+
