@@ -22,12 +22,13 @@
         <!-- Ticket Table -->
         <DataGrid x:Name="dgAllTickets" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding TicketId}" Width="Auto"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto"/>
                 <DataGridTextColumn Header="User" Binding="{Binding Username}" Width="*"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding TicketType}" Width="*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
                 <DataGridTextColumn Header="Service Status" Binding="{Binding ServiceStatus}" Width="*"/>
-                <DataGridTextColumn Header="Created" Binding="{Binding CreatedAt}" Width="*"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                <DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

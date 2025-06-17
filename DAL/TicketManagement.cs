@@ -190,13 +190,13 @@ namespace DAL;
     /// <returns>A Ticket object (either HardwareTicket or SoftwareTicket) populated with data.</returns>
     private Ticket MapTicket(SqlDataReader reader)
     {
-        string type = reader["TicketType"].ToString() ?? "";
+        string type = reader["TicketType"].ToString();
         Ticket ticket = TicketFactory.CreateTicket(type);
 
-        ticket.Id = reader["TicketId"] != DBNull.Value ? Convert.ToInt32(reader["TicketId"]) : 0;
-        ticket.Username = reader["Username"]?.ToString() ?? "";
+        ticket.Id = Convert.ToInt32(reader["TicketId"]);
+        ticket.Username = reader["Username"].ToString();
         ticket.TicketType = type;
-        ticket.CreatedAt = reader["CreatedAt"] != DBNull.Value ? Convert.ToDateTime(reader["CreatedAt"]) : DateTime.MinValue;
+        ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
         ticket.Status = reader["Status"]?.ToString() ?? "";
         ticket.ServiceStatus = reader["ServiceStatus"]?.ToString() ?? "";
 
