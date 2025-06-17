@@ -71,8 +71,8 @@ namespace DAL;
                         ticket.ServiceStatus = reader["ServiceStatus"].ToString();
                         ticket.Response = reader["Response"].ToString();
 
-                        // Propiedades específicas
-                        if (ticket is HardwareTicket hw)
+                    // Propiedades específicas
+                    if (ticket is HardwareTicket hw)
                         {
                             hw.Equipment = reader["Equipment"]?.ToString();
                             hw.Malfunction = reader["Malfunction"]?.ToString();
@@ -206,7 +206,6 @@ namespace DAL;
         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
         ticket.Status = reader["Status"]?.ToString() ?? "";
         ticket.ServiceStatus = reader["ServiceStatus"]?.ToString() ?? "";
-        ticket.Response = reader["Response"]?.ToString() ?? "";
 
         if (ticket is HardwareTicket hw)
         {

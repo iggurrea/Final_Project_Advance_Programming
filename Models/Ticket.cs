@@ -46,7 +46,7 @@ namespace Models
         /// </summary>
         public string ServiceStatus { get; set; } // 'Open', 'Resolved', 'Not Resolved'
 
-
+        public string Description { get; set; }
         /// <summary>
         /// Response for the ticket
         /// </summary>
@@ -92,7 +92,7 @@ namespace Models
         /// <summary>
         /// Gets or sets the description of the issue in the software ticket.
         /// </summary>
-        public string Description { get; set; }
+        public string SoftDescription { get; set; }
 
         /// <summary>
         /// Gets a summary of the software ticket.

@@ -59,7 +59,7 @@ namespace PA_WPF_DB
             ticket.Username = _username;
             ticket.CreatedAt = DateTime.Now;
             ticket.Status = "Unanswered";
-            ticket.ServiceStatus = "Open";
+            ticket.ServiceStatus = "Not Resolved";
 
             // Asignar propiedades específicas
             if (ticket is HardwareTicket hwTicket)
@@ -74,7 +74,7 @@ namespace PA_WPF_DB
                 }
 
                 hwTicket.Equipment = equipment;
-                hwTicket.Malfunction = malfunction;
+                ticket.Description = malfunction;
             }
             else if (ticket is SoftwareTicket swTicket)
             {
@@ -88,7 +88,7 @@ namespace PA_WPF_DB
                 }
 
                 swTicket.Software = software;
-                swTicket.Description = description;
+                ticket.Description = description;
             }
 
             // Guardar en la base de datos
