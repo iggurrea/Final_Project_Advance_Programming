@@ -21,6 +21,12 @@ namespace BLL
         /// </summary>
         public double GetPercentageFulfilledWithinDateRange(DateTime start, DateTime end)
         {
+
+            // Check the dates to be valid in SQL Server
+            DateTime sqlMinDate = new DateTime(1753, 1, 1);
+            if (start < sqlMinDate) start = sqlMinDate;
+            if (end < sqlMinDate) end = sqlMinDate;
+
             const string query = @"
                 SELECT COUNT(*) AS Total,
                        SUM(CASE WHEN Status = 'Fulfilled' THEN 1 ELSE 0 END) AS Fulfilled
@@ -49,6 +55,12 @@ namespace BLL
         /// </summary>
         public Dictionary<string, int> GetServiceStatusDistribution(DateTime? start = null, DateTime? end = null)
         {
+
+            // Check the dates to be valid in SQL Server
+            DateTime sqlMinDate = new DateTime(1753, 1, 1);
+            if (start < sqlMinDate) start = sqlMinDate;
+            if (end < sqlMinDate) end = sqlMinDate;
+
             var result = new Dictionary<string, int>();
 
             string query = "SELECT ServiceStatus, COUNT(*) AS Count FROM Tickets";
@@ -85,6 +97,11 @@ namespace BLL
         /// </summary>
         public Dictionary<string, double> GetAverageServiceTimePerType(DateTime? start = null, DateTime? end = null)
         {
+            // Check the dates to be valid in SQL Server
+            DateTime sqlMinDate = new DateTime(1753, 1, 1);
+            if (start < sqlMinDate) start = sqlMinDate;
+            if (end < sqlMinDate) end = sqlMinDate;
+
             var result = new Dictionary<string, double>();
 
             string query = @"

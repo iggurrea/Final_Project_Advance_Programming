@@ -149,11 +149,12 @@ namespace DAL;
         public bool UpdateTicketResponse(int ticketId, string response) {
             using (var conn = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Tickets SET Response = @Response, Status = 'Fulfilled' WHERE TicketId = @TicketId";
+                string query = "UPDATE Tickets SET Response = @Response, Status = 'Fulfilled', AnsweredAt = @AnsweredAt WHERE TicketId = @TicketId";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Response", response);
                 cmd.Parameters.AddWithValue("@TicketId", ticketId);
-                conn.Open();
+                cmd.Parameters.AddWithValue("@AnsweredAt", DateTime.Now);
+            conn.Open();
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
