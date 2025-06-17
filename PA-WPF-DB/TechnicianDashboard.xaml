@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="TechnicianDashboard"
-        Height="450" Width="800">
+        Height="500" Width="1000">
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -27,7 +27,8 @@
                 <DataGridTextColumn Header="Type" Binding="{Binding TicketType}" Width="*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
                 <DataGridTextColumn Header="Service Status" Binding="{Binding ServiceStatus}" Width="*"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Malfunction}" Width="200"/>
+                <DataGridTextColumn Header="Response" Binding="{Binding Response}" Width="200"/>
                 <DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

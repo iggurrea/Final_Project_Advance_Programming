@@ -46,10 +46,6 @@ namespace Models
         /// </summary>
         public string ServiceStatus { get; set; } // 'Open', 'Resolved', 'Not Resolved'
 
-        /// <summary>
-        /// General description the User gave when creating the ticket
-        /// </summary>
-        public string Description { get; set; }
 
         /// <summary>
         /// Response for the ticket

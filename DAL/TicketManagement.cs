@@ -69,7 +69,6 @@ namespace DAL;
                         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
                         ticket.Status = reader["Status"].ToString();
                         ticket.ServiceStatus = reader["ServiceStatus"].ToString();
-                        ticket.Description = reader["Description"].ToString();
                         ticket.Response = reader["Response"].ToString();
 
                         // Propiedades específicas
