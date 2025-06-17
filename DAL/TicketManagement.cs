@@ -149,7 +149,7 @@ namespace DAL;
         public bool UpdateTicketResponse(int ticketId, string response) {
             using (var conn = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Tickets SET Response = @Response, Status = 'Answered' WHERE TicketId = @TicketId";
+                string query = "UPDATE Tickets SET Response = @Response, Status = 'Fulfilled' WHERE TicketId = @TicketId";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Response", response);
                 cmd.Parameters.AddWithValue("@TicketId", ticketId);
@@ -186,7 +186,7 @@ namespace DAL;
         string type = reader["TicketType"].ToString();
         Ticket ticket = TicketFactory.CreateTicket(type);
 
-        ticket.Id = Convert.ToInt32(reader["Id"]);
+        ticket.Id = Convert.ToInt32(reader["TicketId"]);
         ticket.Username = reader["Username"].ToString();
         ticket.TicketType = type;
         ticket.CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
