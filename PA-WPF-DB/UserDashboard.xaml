@@ -26,9 +26,10 @@
                 <DataGridTextColumn Header="Type" Binding="{Binding TicketType}" Width="*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
                 <DataGridTextColumn Header="Service Status" Binding="{Binding ServiceStatus}" Width="*"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Malfunction}" Width="200"/>
-                <DataGridTextColumn Header="Response" Binding="{Binding Response}" Width="200"/>
-                <DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt}" Width="*"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
+                <DataGridTextColumn Header="Malfunction" Binding="{Binding Malfunction}" Width="200"/>
+                <DataGridTextColumn Header="Response" Binding="{Binding Response}" Width="100"/>
+                <DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt}" Width="100"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -59,7 +59,7 @@ namespace PA_WPF_DB
             ticket.Username = _username;
             ticket.CreatedAt = DateTime.Now;
             ticket.Status = "Unanswered";
-            ticket.ServiceStatus = "Open";
+            ticket.ServiceStatus = "Not Resolved";
 
             // Asignar propiedades específicas
             if (ticket is HardwareTicket hwTicket)

@@ -50,9 +50,19 @@ namespace PA_WPF_DB
                 return;
             }
 
+            if (selected.ServiceStatus == "Resolved")
+            {
+                MessageBox.Show("This ticket has already been resolved and cannot be updated.");
+                return;
+            }
+
             var responseWindow = new TechnicianResponseWindow(selected.Id);
-            responseWindow.ShowDialog();
-            LoadAllTickets();
+            bool? result = responseWindow.ShowDialog();
+
+            if (result == true)
+            {
+                LoadAllTickets(); // vuelve a cargar los datos con la nueva respuesta
+            }
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
